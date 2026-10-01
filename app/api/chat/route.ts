@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const { messages, context } = await req.json();
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -16,6 +15,8 @@ export async function POST(req: Request) {
       );
     }
 
+
+    const { messages, context } = await req.json();
     const genAI = new GoogleGenerativeAI(apiKey);
 
     const systemPrompt = `You are a friendly financial planning companion. 
