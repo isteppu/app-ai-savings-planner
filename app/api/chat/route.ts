@@ -5,14 +5,18 @@ export async function POST(req: Request) {
   try {
     const { messages, context } = await req.json();
 
-    if (!process.env.GEMINI_API_KEY) {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
       return NextResponse.json(
-        { role: "assistant", content: "Oops! It looks like the GEMINI_API_KEY environment variable is not set. Please add it to your .env.local file to use the AI." },
+        {
+          role: "assistant",
+          content: "The required API configuration is missing on the server. Please check your deployment settings."
+        },
         { status: 200 }
       );
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const genAI = new GoogleGenerativeAI(apiKey);
 
     const systemPrompt = `You are a friendly financial planning companion. 
 Your role is to explain calculated results, translate numbers into plain language, suggest trade-offs, answer user questions, and generate alternative scenarios based on calculated data.
