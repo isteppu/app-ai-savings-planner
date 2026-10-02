@@ -48,7 +48,7 @@ ${JSON.stringify(context, null, 2)}
       history: history,
       generationConfig: {
         temperature: 0.7,
-        maxOutputTokens: 400,
+        maxOutputTokens: 5000,
       }
     });
 
